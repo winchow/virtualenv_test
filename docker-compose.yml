@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  db_exam:
+    container_name: postgres_exam
+    image: postgres
+    # build: ./postgres
+    restart: always
+
+  web_exam:
+    container_name: web_exam
+    build: ./sciproject
+    command: sh /code/run.sh
+    volumes:
+      - ./sciproject:/code
+       
+    depends_on:
+      - db_exam
+
+  nginx_exam:
+      container_name: nginx_exam
+      image: nginx:latest
+      ports:
+        - "80:80"
+      volumes:
+        - ./nginx/:/etc/nginx/conf.d/
+        - ./sciproject:/code
+      depends_on:
+        - web_exam

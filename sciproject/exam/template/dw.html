@@ -1,0 +1,113 @@
+<div class="headTop" >
+{% include 'base1.html' %}
+<div>
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" >
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href={% static "css/theme.css" %} type="text/css">
+   <link rel="stylesheet" type="text/css" href="{% static 'home/uikit-3.0.0-beta.40/css/duoWork.css' %}" />
+  <script src="{% static 'home/uikit-3.0.0-beta.40/js/duoWork.js' %}"></script>
+  <link href="https://fonts.googleapis.com/css?family=Kanit&amp;subset=thai" rel="stylesheet">
+  
+  {% block title %}
+
+  {% endblock %}
+</head>
+<body style="font-family: Kanit">
+
+{% block content %}
+{% if request.user.is_authenticated %}
+<br>
+
+<div id="content">
+</div>
+  <div class="py-1">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a href="{% url 'LacListView' %}"class="nav-link"><i class="fa fa-home fa-home" style="margin-left: -10px;"></i>Home</a>
+            </li>
+            <li class="">
+              <a class="active nav-link bt" href="{% url 'SubjectListView' %}">Download</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+<div class="py-0">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card" >
+            <div class="card-header text-center" > โปรดเลือกปีการศึกษา </div>
+            <div class="card-body">
+              
+                   <form action="/export/"  method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                    <div class="select1">
+                    <select class="form-control select1" id = "academic_year " name="academic_year">
+
+                      <!--  -->
+                    {% for name in thing_list %}
+                     <option class="text-left">{{ name }}</option>
+                    {% empty %}
+                     <option class="text-left">empty</option>
+                    {% endfor %}
+                    </select> </div>
+                    <br><br>
+              <div class="btn2">       
+              <input class="btn btn-success text-light btn2" type="submit" value="Download"  > </div>
+                    </form>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="a1a2" style="width: 117.42%;margin-left: -10%">
+  {% include 'base2.html' %}
+  </div>
+ 
+{% else %}
+<div class="py-3">
+      <div class="card">
+        <div class="card-body px-5">
+          <div class="row border-primary">
+            <div class="col-md">
+              <form class="">
+                <div class="form-group text-center"> 
+                <label class="h1">Please login...</label>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <body class="foot">
+      {% include 'base2.html' %}
+</body>
+
+ {% endif %}
+
+
+<!--Make sure the form has the autocomplete function switched off:-->
+ 
+{% endblock %}
+
+
+</body>
+</html>  
+
+
